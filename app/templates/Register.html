@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+<div class="register-form px-3 my-5 py-4 mx-auto d-flex flex-column justify-content-center align-items-center">
+    <h2 class="mb-3 fs-1 fw-bold">Register</h2>
+    <form action="/register" class="container" method="POST">
+        <div class="mb-3">
+            <label for="fullname" class="form-label">Full Name:</label>
+            <input type="text" name="fullname" class="form-control"  placeholder="Enter Full Name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control"  placeholder="Enter Email">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number:</label>
+            <input type="number" name="phone" class="form-control"  placeholder="Enter Phone No.">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="pass" name="password" class="form-control" placeholder="Enter Password">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-outline-success w-100 mt-3"> Register </button>
+        </div>
+        <div class="mt-3 text-center">
+            <span>You already Register ? <a href="{{ url_for('auth.login') }}">Login</a></span>
+        </div>
+    </form>
+</div>
+{% endblock %}

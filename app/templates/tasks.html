@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %} Tasks {% endblock %}
+
+{% block content %}
+<section class="task-container">
+    <!-- task form secontion -->
+
+    <div class="mb-5">
+        <h2 class="mb-4 border-bottom border-primary">
+            <i class="fas fa-tasks me-2 text-primary"></i>
+            {{ "Edit Task" if edit_task else "Create New Task" }}
+        </h2>
+
+        <!-- Add Task page -->
+        {% if edit_task %}
+        <form method="POST" action="{{ url_for('task.update_task', task_id=edit_task.id) }}" class="row g-3">
+            <div class="row">
+                <div class="col col-md-5">
+                    <label for="title" class="form-label">Task Title:</label>
+                    <input type="text" name="title" value="{{ edit_task.title }}" class="form-control"
+                        placeholder="Task Title" required />
+                </div>
+                <div class="col col-md-4">
+                    <label for="due_date" class="form-label">Due Date</label>
+                    <input type="date" name="due_date" value="{{ edit_task.due_date }}" class="form-control" />
+                </div>
+                <div class="col col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn mt-2 btn-outline-warning w-100">Update Task</button>
+                </div>
+            </div>
+        </form>
+        {% else %}
+        <form action="/add" class="row g-3" method="POST">
+            <div class="row">
+                <div class="col col-md-5">
+                    <label for="title" class="form-label">Task Title:</label>
+                    <input type="text" name="title" class="form-control" placeholder="Task Title" required />
+                </div>
+                <div class="col col-4">
+                    <label for="due_date" class="form-label">Due Date:</label>
+                    <input type="date" name="due_date" class="form-control" required />
+                </div>
+                <div class="col col-3">
+                    <label for="" class="form-label"></label>
+                    <button class="btn mt-2 btn-outline-success w-100">Add Task</button>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+
+        <div class="d-flex mt-4 justify-content-between align-items-center mb-4">
+            <h3 class="mb-0 text-white">
+                <i class="fas fa-list-ul me-2 text-primary"></i>
+                Your Tasks
+                {% if Tasks %}
+                <span class="bedge bg-secondary ms-2">{{ Tasks|length }}</span>
+                {% endif %}
+            </h3>
+
+            <!-- clear all tasks -->
+            {% if Tasks %}
+            <form action="/clear" method="POST" onsubmit="return confirm('Are you sure you want to clear all tasks?');">
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="fas fa-trash-alt me-2"></i>Clear All
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        <!-- Show Task -->
+        {% if Tasks %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Task Title</th>
+                        <th>Due Date</th>
+                        <th>Created_At</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in Tasks %}
+                    <tr>
+                        <td class="fw-bold">{{ loop.index }}</td>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.due_date }}</td>
+                        <td>{{ task.created_at }}</td>
+                        <td>{{ task.status }}</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('task.delete_task', task_id=task.id) }}"
+                                    class="btn btn-sm btn-danger text-white" onclick="return confirm('Delete this task?')"
+                                    title="Delete Task">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                <a href="{{ url_for('task.update_task', task_id=task.id) }}"
+                                    class="btn btn-sm btn-warning text-dark" title="Edit Task">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ url_for('task.toggle_status', task_id=task.id) }}"
+                                    class="btn btn-sm btn-info text-primary" title="Toggle Status">
+                                    <i class="fas fa-sync-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Task Title</th>
+                    <th>Due Date</th>
+                    <th>Created_At</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center">
+                    <td class="fs-2" colspan="6">
+                        No such task yet added!
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
