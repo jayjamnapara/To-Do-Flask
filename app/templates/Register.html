@@ -5,22 +5,22 @@
 {% block content %}
 <div class="register-form px-3 my-5 py-4 mx-auto d-flex flex-column justify-content-center align-items-center">
     <h2 class="mb-3 fs-1 fw-bold">Register</h2>
-    <form action="/register" class="container" method="POST">
+    <form action="/register" class="container" method="POST" onsubmit="return validateRegisterForm();">
         <div class="mb-3">
             <label for="fullname" class="form-label">Full Name:</label>
-            <input type="text" name="fullname" class="form-control"  placeholder="Enter Full Name">
+            <input id="fullname" type="text" name="fullname" class="form-control" value="{{ form_data.get('fullname','') }}" placeholder="Enter Full Name">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" name="email" class="form-control"  placeholder="Enter Email">
+            <input id="email" type="email" name="email" class="form-control" value="{{ form_data.get('email','') }}" placeholder="Enter Email">
         </div>
         <div class="mb-3">
             <label for="phone" class="form-label">Phone Number:</label>
-            <input type="number" name="phone" class="form-control"  placeholder="Enter Phone No.">
+            <input id="phone" type="tel" name="phone" class="form-control" value="{{ form_data.get('phone','') }}" placeholder="Enter Phone No.">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
-            <input type="pass" name="password" class="form-control" placeholder="Enter Password">
+            <input id="password" type="password" name="password" class="form-control" placeholder="Enter Password">
         </div>
         <div>
             <button type="submit" class="btn btn-outline-success w-100 mt-3"> Register </button>

@@ -14,16 +14,16 @@
 
         <!-- Add Task page -->
         {% if edit_task %}
-        <form method="POST" action="{{ url_for('task.update_task', task_id=edit_task.id) }}" class="row g-3">
+        <form method="POST" action="{{ url_for('task.update_task', task_id=edit_task.id) }}" class="row g-3" onsubmit="return validateTaskForm(this);">
             <div class="row">
                 <div class="col col-md-5">
                     <label for="title" class="form-label">Task Title:</label>
-                    <input type="text" name="title" value="{{ edit_task.title }}" class="form-control"
+                    <input id="task-title-edit" type="text" name="title" value="{{ edit_task.title }}" class="form-control"
                         placeholder="Task Title" required />
                 </div>
                 <div class="col col-md-4">
                     <label for="due_date" class="form-label">Due Date</label>
-                    <input type="date" name="due_date" value="{{ edit_task.due_date }}" class="form-control" />
+                    <input id="task-due-edit" type="date" name="due_date" value="{{ edit_task.due_date }}" class="form-control" />
                 </div>
                 <div class="col col-md-3 d-flex align-items-end">
                     <button type="submit" class="btn mt-2 btn-outline-warning w-100">Update Task</button>
@@ -31,15 +31,15 @@
             </div>
         </form>
         {% else %}
-        <form action="/add" class="row g-3" method="POST">
+        <form action="/add" class="row g-3" method="POST" onsubmit="return validateTaskForm(this);">
             <div class="row">
                 <div class="col col-md-5">
                     <label for="title" class="form-label">Task Title:</label>
-                    <input type="text" name="title" class="form-control" placeholder="Task Title" required />
+                    <input id="task-title" type="text" name="title" class="form-control" placeholder="Task Title" required />
                 </div>
                 <div class="col col-4">
                     <label for="due_date" class="form-label">Due Date:</label>
-                    <input type="date" name="due_date" class="form-control" required />
+                    <input id="task-due" type="date" name="due_date" class="form-control" required />
                 </div>
                 <div class="col col-3">
                     <label for="" class="form-label"></label>
